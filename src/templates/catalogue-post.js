@@ -48,6 +48,8 @@ export const cataloguePageQuery = graphql`
                 ...GatsbyImageSharpFluid
               }
             }
+            extension
+            publicURL
           }
           name
           text

@@ -32,8 +32,8 @@ const Slider = ({ slider }) => {
           <article key={v4()} className={`slider-content ${currentSlide === index ? 'active' : ''}`}>
             <div className="item-image">
               <Item
-                original={sliderContent.image.childImageSharp.fluid.src}
-                thumbnail={sliderContent.image.childImageSharp.fluid.src}
+                original={sliderContent.image.publicURL ? sliderContent.image.publicURL : sliderContent.image}
+                thumbnail={sliderContent.image.publicURL ? sliderContent.image.publicURL : sliderContent.image}
                 width="1920"
                 height="1280"
               >
@@ -42,7 +42,7 @@ const Slider = ({ slider }) => {
                     <button className="fullscreen">
                       <AiOutlineFullscreen />
                     </button>
-                    <img src={sliderContent.image.childImageSharp.fluid.src} alt={sliderContent.name} title={sliderContent.name} width="600" height="480" />
+                    <img src={sliderContent.image.publicURL ? sliderContent.image.publicURL : sliderContent.image} alt={sliderContent.name} title={sliderContent.name} width="600" height="480" />
                   </div>
                 )}
               </Item>
