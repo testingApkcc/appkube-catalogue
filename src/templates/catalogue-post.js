@@ -8,7 +8,9 @@ export const CataloguePageTemplate = ({
   slider,
 }) => {
   return (
-    <Slider slider={slider} />
+    <div className="slider-container">
+      <Slider slider={slider} />
+    </div>
   )
 }
 
@@ -19,11 +21,9 @@ CataloguePageTemplate.propTypes = {
 const CataloguePage = ({ data }) => {
   const { frontmatter } = data.markdownRemark
   return (
-    <div className="slider-container">
-      <CataloguePageTemplate
-        slider={frontmatter.slider}
-      />
-    </div>
+    <CataloguePageTemplate
+      slider={frontmatter.slider}
+    />
   )
 }
 
