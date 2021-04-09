@@ -1,2 +1,4 @@
 /static/*
   Cache-Control: "public, max-age=360000"
+/*
+  X-Frame-Options: ALLOW
