@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 import Slider from '../components/Slider'
 import './slider.css'
+import './catalogue.css'
 
 export const CataloguePageTemplate = ({
   slider,

@@ -1,0 +1,14 @@
+.catalogue-roll-container {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.catalogue-roll-container .input.select{
+    -moz-appearance: auto;
+    -webkit-appearance: auto;
+}
+.catalogue-roll-container .blog-list-item .subtitle {
+    font-size: 16px;
+    margin-bottom: 1rem;
+    margin-top: 0.2rem;
+}
