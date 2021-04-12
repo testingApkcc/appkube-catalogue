@@ -6,8 +6,3 @@
   NODE_VERSION = "12"
   YARN_VERSION = "1.22.4"
   YARN_FLAGS = "--no-ignore-optional"
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "ALLOW"
-    X-XSS-Protection = "1; mode=block"
