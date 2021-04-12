@@ -7,13 +7,14 @@ import otherIcon from '../img/other-icon.png'
 
 class CategoryRoute extends React.Component {
   render() {
+
     const posts = this.props.data.allMarkdownRemark.edges
     const dashboardLists = posts.map((post) => (
       <div key={post.node.fields.slug} className="dashboard-list-item box">
         <Link to={post.node.fields.slug}>
           <div className="columns">
             <div className="column is-1">
-            <img src={!!post.node.frontmatter.image.childImageSharp ? post.node.frontmatter.image.childImageSharp.fluid.src : post.node.frontmatter.image} alt={post.node.frontmatter.title} title={post.node.frontmatter.title} />
+              <img src={!!post.node.frontmatter.image.childImageSharp ? post.node.frontmatter.image.childImageSharp.fluid.src : post.node.frontmatter.image} alt={post.node.frontmatter.title} title={post.node.frontmatter.title} />
             </div>
             <div className="column is-8">
               <div className="dashboard-name">
@@ -24,7 +25,7 @@ class CategoryRoute extends React.Component {
               </div>
               <div className="dashboard-link">
                 <ul>
-                  <li><img src={prometheusIcon} alt="" /> Prometheus</li>
+                  <li><img src={prometheusIcon} alt="" /> {post.node.frontmatter.datasource}</li>
                   <li><img src={otherIcon} alt="" /> Other</li>
                 </ul>
               </div>
@@ -41,11 +42,11 @@ class CategoryRoute extends React.Component {
         </Link>
       </div>
     ))
+    const datasources = this.props.data.allMarkdownRemark.edges
     const category = this.props.pageContext.cat;
     const title = this.props.data.site.siteMetadata.title
-    const totalCount = this.props.data.allMarkdownRemark.totalCount
-    const categoryHeader = `${totalCount} post${totalCount === 1 ? '' : 's'
-      } tagged with “${category}”`
+    //const totalCount = this.props.data.allMarkdownRemark.totalCount
+    //const categoryHeader = `${totalCount} post${totalCount === 1 ? '' : 's'} tagged with “${category}”`
 
     return (
       <Layout>
@@ -60,14 +61,17 @@ class CategoryRoute extends React.Component {
                     <label>Name / Description</label>
                     <input className="input" type="text" />
                   </div>
-                  <div className="field">
+
+                  {datasources && <div className="field">
                     <label>Data Source</label>
                     <select className="input select">
                       <option>All</option>
-                      <option>Akumuli</option>
-                      <option>Amazon Timestream</option>
+                      {datasources.map((datas) => (
+                        <option>{datas.node.frontmatter.datasource}</option>
+                      ))}
                     </select>
-                  </div>
+                  </div>}
+
                   <div className="field">
                     <label>Panel Type</label>
                     <select className="input select">
@@ -129,6 +133,7 @@ export const categoryPageQuery = graphql`
               }
             }
             text
+            datasource
           }
         }
       }

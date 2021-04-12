@@ -104,7 +104,7 @@ class CatalogueRoll extends React.Component {
                       <p className="subtitle is-block">{row.frontmatter.text}</p>
                       <ul>
                         <li><a onClick={e => this.onClickAddLibrary(e, row.frontmatter.title, row.id)}>Add Catalog To library</a></li>
-                        <li><Link to={`/category/${kebabCase(row.frontmatter.category[1])}/`}>Preview Dashboard</Link></li>
+                        {/* <li><Link to={`/category/${kebabCase(row.frontmatter.category[1])}/`}>Preview Dashboard</Link></li> */}
                       </ul>
                     </div>
                   </div>
