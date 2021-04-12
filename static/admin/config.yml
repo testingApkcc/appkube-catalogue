@@ -40,6 +40,7 @@ collections:
           default: "catalogue-post",
         }
       - { label: "Title", name: "title", widget: "string" }
+      - { label: "Category", name: "category", widget: "list" }
       - {
           label: Slider,
           name: slider,

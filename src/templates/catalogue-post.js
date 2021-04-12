@@ -4,6 +4,7 @@ import { graphql } from 'gatsby'
 import Slider from '../components/Slider'
 import './slider.css'
 import './catalogue.css'
+import './modal.css'
 
 export const CataloguePageTemplate = ({
   slider,
