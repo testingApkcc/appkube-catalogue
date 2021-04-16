@@ -35,7 +35,7 @@ class CatalogueRoll extends React.Component {
     const pushedCatalogue = [];
     for (let i = 0; i < posts.length; i++) {
       let row = posts[i].node.frontmatter;
-      if (category.indexOf(row.category[0]) == -1) {
+      if (category.indexOf(row.category[0]) === -1) {
         category.push(row.category[0]);
       }
       if (pushedCatalogue.indexOf(row.category[1]) === -1) {
@@ -52,29 +52,33 @@ class CatalogueRoll extends React.Component {
   keyPress = (e) => {
     const { data } = this.props
     const { edges: posts } = data.allMarkdownRemark;
-    const { value } = e.target;
+    let { value } = e.target;
     this.setState({
       searchKey: value,
     });
     var queryResult = [];
     let duplicatecatalogue = [];
     if (posts) {
-      if (value.trim()) {
+      value = value.trim();
+      value = value.toLowerCase();
+      if (value) {
         for (let i = 0; i < posts.length; i++) {
           let search = posts[i].node;
-          if (search.frontmatter.category[1].toLowerCase().indexOf(value) !== -1 || search.frontmatter.category[1].indexOf(value) !== -1) {
-            if (duplicatecatalogue.indexOf(search.frontmatter.category[1]) === -1) {
+          let category = search.frontmatter.category[1].toLowerCase();
+          if (category.indexOf(value) !== -1) {
+            if (duplicatecatalogue.indexOf(category) === -1) {
               queryResult.push(search);
-              duplicatecatalogue.push(search.frontmatter.category[1]);
+              duplicatecatalogue.push(category);
             }
           }
         }
       } else {
         for (let j = 0; j < posts.length; j++) {
           let search = posts[j].node;
-          if (duplicatecatalogue.indexOf(search.frontmatter.category[1]) === -1) {
+          let category = search.frontmatter.category[1].toLowerCase();
+          if (duplicatecatalogue.indexOf(category) === -1) {
             queryResult.push(search);
-            duplicatecatalogue.push(search.frontmatter.category[1]);
+            duplicatecatalogue.push(category);
           }
         }
       }
