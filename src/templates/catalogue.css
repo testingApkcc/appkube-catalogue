@@ -40,6 +40,7 @@
     display: inline-block;
     min-width: 100px;
     text-align: center;
+    cursor: pointer;
 }
 
 .catalogue-roll-container .catalogue-fliter .fliter-left .create-btn:hover {
@@ -316,6 +317,24 @@
     -o-transition: height 0.35s ease;
     transition: height 0.35s ease;
 }
+
+.add-catalogue-container .catalog-form-group .form-group{
+    flex-wrap: wrap;
+}
+
+.add-catalogue-container .catalog-form-group .form-group .input {
+    width: 100%;
+    max-width: 100%;
+}
+.add-catalogue-container .catalog-form-group .form-group .input.select {
+    width: 250px;
+    max-width: 250px;
+}
+.add-catalogue-container .catalog-form-group .form-group .input.textarea {
+    height: 100px;
+}
+
+
 
 .left-filter strong {
     display: block;

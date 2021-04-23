@@ -52,6 +52,31 @@ collections:
               { label: Text, name: text, widget: text },
             ],
         }
+  - name: "dashboardpreview"
+    label: "Dashboard Preview"
+    folder: "src/pages/dashboardpreview"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {
+          label: "Template Key",
+          name: "templateKey",
+          widget: "hidden",
+          default: "dashboard-preview",
+        }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Category", name: "dashtype", widget: "text" }
+      - {
+          label: Slider,
+          name: slider,
+          widget: list,
+          fields:
+            [
+              { label: Image, name: image, widget: image },
+              { label: Name, name: name, widget: text },
+              { label: Text, name: text, widget: text },
+            ],
+        }
   - name: "pages"
     label: "Pages"
     files:

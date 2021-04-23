@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import { Link, graphql, StaticQuery } from 'gatsby'
 import isSearch from '../img/search-icon.png'
 import AddLibraryPopup from './AddLibraryPopup';
-import { kebabCase } from 'lodash'
+import AddCataloguePopup from './AddCataloguePopup';
+import { kebabCase } from 'lodash';
+import { v4 } from 'uuid';
 
 class CatalogueRoll extends React.Component {
   addlibraryRef;
@@ -16,6 +18,7 @@ class CatalogueRoll extends React.Component {
       searchKey: '',
     }
     this.addlibraryRef = React.createRef();
+    this.addcatalogueRef = React.createRef();
   }
 
   componentDidMount() {
@@ -30,7 +33,8 @@ class CatalogueRoll extends React.Component {
 
   setCategory = () => {
     const { data } = this.props
-    const { edges: posts } = data.allMarkdownRemark;
+    const { edges: posts } = data.catalogs;
+    const { edges: dashboards } = data.dashboards;
     const { category, catalogue } = this.state;
     const pushedCatalogue = [];
     for (let i = 0; i < posts.length; i++) {
@@ -43,6 +47,15 @@ class CatalogueRoll extends React.Component {
         pushedCatalogue.push(row.category[1]);
       }
     }
+    for (let i = 0; i < catalogue.length; i++) {
+      let cat = catalogue[i].frontmatter.category[1];
+      for (let j = 0; j < dashboards.length; j++) {
+        let dash = dashboards[j].node;
+        if (cat === dash.frontmatter.dashtype) {
+          catalogue[i].dashboard = dash;
+        }
+      }
+    }
     this.setState({
       category,
       catalogue
@@ -51,7 +64,7 @@ class CatalogueRoll extends React.Component {
 
   keyPress = (e) => {
     const { data } = this.props
-    const { edges: posts } = data.allMarkdownRemark;
+    const { edges: posts } = data.catalogs;
     let { value } = e.target;
     this.setState({
       searchKey: value,
@@ -97,7 +110,7 @@ class CatalogueRoll extends React.Component {
         {
           (categorytype == row.frontmatter.category[0] || categorytype == 'All') &&
             retData.push(
-              <div className="is-parent column is-4" key={row.id}>
+              <div className="is-parent column is-4" key={v4()}>
                 <article className="blog-list-item tile is-child box">
                   <div className="columns is-multiline">
                     <div className="is-parent column is-4">
@@ -108,7 +121,10 @@ class CatalogueRoll extends React.Component {
                       <p className="subtitle is-block">{row.frontmatter.text}</p>
                       <ul>
                         <li><a onClick={e => this.onClickAddLibrary(e, row.frontmatter.title, row.id)}>Add Catalog To library</a></li>
-                        {/* <li><Link to={`/category/${kebabCase(row.frontmatter.category[1])}/`}>Preview Dashboard</Link></li> */}
+                        {
+                          row.dashboard &&
+                          <li><Link to={`${row.dashboard.fields.slug}`}>Preview Dashboard</Link></li>
+                        }
                       </ul>
                     </div>
                   </div>
@@ -119,7 +135,7 @@ class CatalogueRoll extends React.Component {
       }
     } else {
       retData.push(
-        <div>There is no dashboard match.</div>
+        <div key={v4()}>There is no dashboard match.</div>
       );
     }
     return retData;
@@ -129,34 +145,39 @@ class CatalogueRoll extends React.Component {
     this.addlibraryRef.current.toggle(selectedCatalogName, selectedCatalogId);
   };
 
+  onClickAddCatalogue = () => {
+    this.addcatalogueRef.current.toggle();
+  };
+
+
   render() {
     const { category, searchKey } = this.state;
     return (
       <div className="catalogue-roll-container">
         <div className="container">
           <div className="common-container">
-            <div class="catalog-app-text">
+            <div className="catalog-app-text">
               <h3>Catalogue</h3>
               <p>A catalogue is collection of dashboards</p>
             </div>
           </div>
           <div className="common-container catalogue-fliter">
-            <div class="fliter-left">
-              <a href="#" class="create-btn">Add Catalogue</a>
+            <div className="fliter-left">
+              <button onClick={this.onClickAddCatalogue} className="create-btn">Add Catalogue</button>
             </div>
-            <div class="fliter-right">
-              <div class="field category-select">
-                <select class="input select" name="catalogType" onChange={this.handlestateChange}>
+            <div className="fliter-right">
+              <div className="field category-select">
+                <select className="input select" name="catalogType" onChange={this.handlestateChange}>
                   <option>All</option>
                   {category &&
                     category.map((value) => (
-                      <option>{value}</option>
+                      <option key={v4()}>{value}</option>
                     ))}
                 </select>
               </div>
-              <div class="form-group category-control-group">
+              <div className="form-group category-control-group">
                 <form>
-                  <input type="text" class="input" placeholder="Search" value={searchKey} onChange={this.keyPress} />
+                  <input type="text" className="input" placeholder="Search" value={searchKey} onChange={this.keyPress} />
                   <button className="is-search"><img src={isSearch} alt="" /></button>
                 </form>
               </div>
@@ -169,6 +190,7 @@ class CatalogueRoll extends React.Component {
           </div>
         </div>
         <AddLibraryPopup ref={this.addlibraryRef} />
+        <AddCataloguePopup ref={this.addcatalogueRef} />
       </div>
     )
   }
@@ -176,7 +198,7 @@ class CatalogueRoll extends React.Component {
 
 CatalogueRoll.propTypes = {
   data: PropTypes.shape({
-    allMarkdownRemark: PropTypes.shape({
+    catalogs: PropTypes.shape({
       edges: PropTypes.array,
     }),
   }),
@@ -186,7 +208,7 @@ export default () => (
   <StaticQuery
     query={graphql`
       query CatalogueRollQuery {
-        allMarkdownRemark(
+        catalogs: allMarkdownRemark(
           sort: { order: DESC, fields: [frontmatter___date] }
           filter: { frontmatter: { templateKey: { eq: "catalogue-post" } } }
         ) {
@@ -209,6 +231,25 @@ export default () => (
                 text
                 templateKey
                 category
+              }
+            }
+          }
+        }
+        dashboards: allMarkdownRemark(
+          sort: { order: DESC, fields: [frontmatter___date] }
+          filter: { frontmatter: { templateKey: { eq: "dashboard-preview" } } }
+        ) {
+          edges {
+            node {
+              excerpt(pruneLength: 400)
+              id
+              fields {
+                slug
+              }
+              frontmatter {
+                title
+                templateKey
+                dashtype
               }
             }
           }

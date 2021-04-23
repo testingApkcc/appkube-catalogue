@@ -1,7 +1,8 @@
 import React from 'react'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { Collapse } from 'reactstrap';
-import openFolderIcon from '../img/open-folder.png';
+import openFolderIcon from '../../img/open-folder.png';
+import { v4 } from 'uuid';
 
 class AddLibraryPopup extends React.Component {
     constructor(props) {
@@ -325,7 +326,7 @@ class AddLibraryPopup extends React.Component {
             let subIndexArr = [];
             subIndexArr = [...indexArr, j];
             subFolderJSX.push(
-                <tr>
+                <tr key={v4()}>
                     <td>
                         {
                             !subFolder.isFolder &&
@@ -344,7 +345,7 @@ class AddLibraryPopup extends React.Component {
 
         }
         retData.push(
-            <div>
+            <div key={v4()}>
                 <div className="general-heading">
                     <input type="checkbox" checked={folder.isChecked} className="checkbox" onClick={(e) => this.onClickCheckbox(e, [...indexArr])} />
                     <span onClick={() => this.onClickOpenSubFolderArr([...indexArr])}><img src={openFolderIcon} alt="" /></span>
