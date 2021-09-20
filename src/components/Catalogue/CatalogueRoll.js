@@ -13,8 +13,16 @@ class CatalogueRoll extends React.Component {
     super(props);
     this.state = {
       categorytype: 'All',
+      hostingnature: 'All',
+      servicetype: 'All',
+      servicename: 'All',
+      nature: '',
       cloudtype: [],
       catalogue: [],
+      hostingnature: [],
+      servicetype: [],
+      servicename: [],
+      nature: [],
       searchKey: '',
     }
     this.addlibraryRef = React.createRef();
@@ -26,8 +34,9 @@ class CatalogueRoll extends React.Component {
   }
 
   handlestateChange = (e) => {
+    const { name, value } = e.target;
     this.setState({
-      categorytype: e.target.value,
+      [name]: value,
     })
   }
 
@@ -35,16 +44,28 @@ class CatalogueRoll extends React.Component {
     const { data } = this.props
     const { edges: posts } = data.catalogs;
     const { edges: dashboards } = data.dashboards;
-    const { cloudtype, catalogue } = this.state;
+    const { cloudtype, catalogue, hostingnature, servicetype, servicename,nature } = this.state;
     const pushedCatalogue = [];
     for (let i = 0; i < posts.length; i++) {
       let row = posts[i].node.frontmatter;
       if (cloudtype.indexOf(row.cloudtype[0]) === -1) {
         cloudtype.push(row.cloudtype[0]);
+      } else if (hostingnature.indexOf(row.hostingnature[0]) === -1) {
+        hostingnature.push(row.hostingnature[0]);
+      } else if (servicetype.indexOf(row.servicetype[0]) === -1) {
+        servicetype.push(row.servicetype[0]);
+      } else if (servicename.indexOf(row.servicename[0]) === -1) {
+        servicename.push(row.servicename[0]);
+      } else if (nature.indexOf(row.nature[0]) === -1) {
+        nature.push(row.nature[0]);
       }
-      if (pushedCatalogue.indexOf(row.cloudtype[1]) === -1) {
+      if (pushedCatalogue.indexOf(row.cloudtype[1]) === -1 || pushedCatalogue.indexOf(row.hostingnature[1]) === -1 || pushedCatalogue.indexOf(row.servicetype[1]) === -1 || pushedCatalogue.indexOf(row.servicename[1]) === -1 || pushedCatalogue.indexOf(row.nature[1]) === -1) {
         catalogue.push(posts[i].node);
         pushedCatalogue.push(row.cloudtype[1]);
+        pushedCatalogue.push(row.hostingnature[1]);
+        pushedCatalogue.push(row.servicetype[1]);
+        pushedCatalogue.push(row.servicename[1]);
+        pushedCatalogue.push(row.nature[1]);
       }
     }
     for (let i = 0; i < catalogue.length; i++) {
@@ -58,6 +79,9 @@ class CatalogueRoll extends React.Component {
     }
     this.setState({
       cloudtype,
+      hostingnature,
+      servicetype,
+      servicename,
       catalogue
     })
   }
@@ -149,23 +173,10 @@ class CatalogueRoll extends React.Component {
     this.addcatalogueRef.current.toggle();
   };
 
-  displayCloudType = () => {
-    const { cloudtype } = this.state;
-    let options = [];
-    if (cloudtype) {
-      for (let i = 0; i < cloudtype.length; i++) {
-        console.log(cloudtype[i]);
-        options.push(
-          <option key={`cloudtype-${i}`}>{cloudtype[i]}</option>
-        )
-      }
-    }
-    return options;
-  }
-
 
   render() {
-    const { cloudtype, searchKey } = this.state;
+    const { cloudtype, searchKey, hostingnature, servicetype, servicename, nature } = this.state;
+    console.log(servicename)
     return (
       <div className="catalogue-roll-container">
         <div className="container">
@@ -181,13 +192,48 @@ class CatalogueRoll extends React.Component {
             </div>
             <div className="fliter-right">
               <div className="field category-select">
-                <select className="input select" name="catalogType" onChange={this.handlestateChange}>
+                <select className="input select" name="categorytype" onChange={this.handlestateChange}>
                   <option>All</option>
-                  {this.displayCloudType()}
-                  {/* {cloudtype &&
+                  {cloudtype &&
                     cloudtype.map((value) => (
                       <option key={v4()}>{value}</option>
-                    ))} */}
+                    ))}
+                </select>
+              </div>
+              <div className="field category-select">
+                <select className="input select" name="hostingnature" onChange={this.handlestateChange}>
+                  <option>All</option>
+                  {hostingnature &&
+                    hostingnature.map((value) => (
+                      <option key={v4()}>{value}</option>
+                    ))}
+                </select>
+              </div>
+              <div className="field category-select">
+                <select className="input select" name="servicetype" onChange={this.handlestateChange}>
+                  <option>All</option>
+                  {servicetype &&
+                    servicetype.map((value) => (
+                      <option key={v4()}>{value}</option>
+                    ))}
+                </select>
+              </div>
+              <div className="field category-select">
+                <select className="input select" name="servicename" onChange={this.handlestateChange}>
+                  <option>All</option>
+                  {servicename &&
+                    servicename.map((value) => (
+                      <option key={v4()}>{value}</option>
+                    ))}
+                </select>
+              </div>
+              <div className="field category-select">
+                <select className="input select" name="nature" onChange={this.handlestateChange}>
+                  <option>All</option>
+                  {nature &&
+                    nature.map((value) => (
+                      <option key={v4()}>{value}</option>
+                    ))}
                 </select>
               </div>
               <div className="form-group category-control-group">
@@ -246,6 +292,10 @@ export default () => (
                 text
                 templateKey
                 cloudtype
+                hostingnature
+                servicetype
+                servicename
+                nature
               }
             }
           }
