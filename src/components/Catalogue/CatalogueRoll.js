@@ -13,10 +13,10 @@ class CatalogueRoll extends React.Component {
     super(props);
     this.state = {
       categorytype: 'All',
-      hostingnature: 'All',
-      servicetype: 'All',
-      servicename: 'All',
-      nature: '',
+      hostingnatureOption: 'All',
+      servicetypeOption: 'All',
+      servicenameOption: 'All',
+      natureOption: 'All',
       cloudtype: [],
       catalogue: [],
       hostingnature: [],
@@ -44,7 +44,7 @@ class CatalogueRoll extends React.Component {
     const { data } = this.props
     const { edges: posts } = data.catalogs;
     const { edges: dashboards } = data.dashboards;
-    const { cloudtype, catalogue, hostingnature, servicetype, servicename,nature } = this.state;
+    const { cloudtype, catalogue, hostingnature, servicetype, servicename, nature } = this.state;
     const pushedCatalogue = [];
     for (let i = 0; i < posts.length; i++) {
       let row = posts[i].node.frontmatter;
@@ -126,35 +126,35 @@ class CatalogueRoll extends React.Component {
   }
 
   displayCatalogue = () => {
-    const { catalogue, categorytype } = this.state;
+    const { catalogue, categorytype, hostingnatureOption, servicetypeOption, servicenameOption, natureOption } = this.state;
     let retData = [];
     if (catalogue.length > 0) {
       for (let i = 0; i < catalogue.length; i++) {
         let row = catalogue[i];
         {
-          // (categorytype == row.frontmatter.cloudtype[0] || categorytype == 'All') &&
-          retData.push(
-            <div className="is-parent column is-4" key={v4()}>
-              <article className="blog-list-item tile is-child box">
-                <div className="columns is-multiline">
-                  <div className="is-parent column is-4">
-                    <img src={!!row.frontmatter.image.childImageSharp ? row.frontmatter.image.childImageSharp.fluid.src : row.frontmatter.image} alt={row.frontmatter.title} title={row.frontmatter.title} />
+          (categorytype == row.frontmatter.cloudtype[0] || categorytype == 'All' || hostingnatureOption == row.frontmatter.hostingnature[0] || hostingnatureOption == 'All' || servicetypeOption == row.frontmatter.servicetype[0] || servicetypeOption == 'All' || servicenameOption == row.frontmatter.servicename[0] || servicenameOption == 'All' || natureOption == row.frontmatter.nature[0] || natureOption == 'All') &&
+            retData.push(
+              <div className="is-parent column is-4" key={v4()}>
+                <article className="blog-list-item tile is-child box">
+                  <div className="columns is-multiline">
+                    <div className="is-parent column is-4">
+                      <img src={!!row.frontmatter.image.childImageSharp ? row.frontmatter.image.childImageSharp.fluid.src : row.frontmatter.image} alt={row.frontmatter.title} title={row.frontmatter.title} />
+                    </div>
+                    <div className="is-parent column is-8">
+                      <p className="title is-block"><Link to={`/category/${kebabCase(row.frontmatter.cloudtype[1])}/`}>{row.frontmatter.cloudtype[1]}</Link></p>
+                      <p className="subtitle is-block">{row.frontmatter.text}</p>
+                      <ul>
+                        <li><a onClick={e => this.onClickAddLibrary(e, row.frontmatter.title, row.id)}>Add Catalog To library</a></li>
+                        {
+                          row.dashboard &&
+                          <li><Link to={`${row.dashboard.fields.slug}`}>Preview Dashboard</Link></li>
+                        }
+                      </ul>
+                    </div>
                   </div>
-                  <div className="is-parent column is-8">
-                    <p className="title is-block"><Link to={`/category/${kebabCase(row.frontmatter.cloudtype[1])}/`}>{row.frontmatter.cloudtype[1]}</Link></p>
-                    <p className="subtitle is-block">{row.frontmatter.text}</p>
-                    <ul>
-                      <li><a onClick={e => this.onClickAddLibrary(e, row.frontmatter.title, row.id)}>Add Catalog To library</a></li>
-                      {
-                        row.dashboard &&
-                        <li><Link to={`${row.dashboard.fields.slug}`}>Preview Dashboard</Link></li>
-                      }
-                    </ul>
-                  </div>
-                </div>
-              </article>
-            </div>
-          );
+                </article>
+              </div>
+            );
         }
       }
     } else {
@@ -201,7 +201,7 @@ class CatalogueRoll extends React.Component {
                 </select>
               </div>
               <div className="field category-select">
-                <select className="input select" name="hostingnature" onChange={this.handlestateChange}>
+                <select className="input select" name="hostingnatureOption" onChange={this.handlestateChange}>
                   <option>All</option>
                   {hostingnature &&
                     hostingnature.map((value) => (
@@ -210,7 +210,7 @@ class CatalogueRoll extends React.Component {
                 </select>
               </div>
               <div className="field category-select">
-                <select className="input select" name="servicetype" onChange={this.handlestateChange}>
+                <select className="input select" name="servicetypeOption" onChange={this.handlestateChange}>
                   <option>All</option>
                   {servicetype &&
                     servicetype.map((value) => (
@@ -219,7 +219,7 @@ class CatalogueRoll extends React.Component {
                 </select>
               </div>
               <div className="field category-select">
-                <select className="input select" name="servicename" onChange={this.handlestateChange}>
+                <select className="input select" name="servicenameOption" onChange={this.handlestateChange}>
                   <option>All</option>
                   {servicename &&
                     servicename.map((value) => (
@@ -228,7 +228,7 @@ class CatalogueRoll extends React.Component {
                 </select>
               </div>
               <div className="field category-select">
-                <select className="input select" name="nature" onChange={this.handlestateChange}>
+                <select className="input select" name="natureOption" onChange={this.handlestateChange}>
                   <option>All</option>
                   {nature &&
                     nature.map((value) => (
