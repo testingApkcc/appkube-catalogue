@@ -147,7 +147,7 @@ export const categoryPageQuery = graphql`
     allMarkdownRemark(
       limit: 1000
       sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { category: { in: [$cat] } } }
+      filter: { frontmatter: { cloudtype: { in: [$cat] } } }
     ) {
       totalCount
       edges {

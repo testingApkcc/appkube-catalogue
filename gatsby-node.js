@@ -18,7 +18,7 @@ exports.createPages = ({ actions, graphql }) => {
             frontmatter {
               tags
               templateKey
-              category
+              cloudtype
             }
           }
         }
@@ -71,18 +71,18 @@ exports.createPages = ({ actions, graphql }) => {
       })
     })
     // category pages:
-    let category = []
+    let cloudtype = []
     // Iterate through each post, putting all found tags into `tags`
     posts.forEach((edge) => {
-      if (_.get(edge, `node.frontmatter.category`)) {
-        category = category.concat(edge.node.frontmatter.category)
+      if (_.get(edge, `node.frontmatter.cloudtype`)) {
+        cloudtype = cloudtype.concat(edge.node.frontmatter.cloudtype)
       }
     })
     // Eliminate duplicate tags
-    category = _.uniq(category)
+    cloudtype = _.uniq(cloudtype)
 
     // Make tag pages
-    category.forEach((cat) => {
+    cloudtype.forEach((cat) => {
       const categoryPath = `/category/${_.kebabCase(cat)}/`
 
       createPage({

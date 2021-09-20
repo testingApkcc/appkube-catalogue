@@ -13,7 +13,7 @@ class CatalogueRoll extends React.Component {
     super(props);
     this.state = {
       categorytype: 'All',
-      category: [],
+      cloudtype: [],
       catalogue: [],
       searchKey: '',
     }
@@ -35,20 +35,20 @@ class CatalogueRoll extends React.Component {
     const { data } = this.props
     const { edges: posts } = data.catalogs;
     const { edges: dashboards } = data.dashboards;
-    const { category, catalogue } = this.state;
+    const { cloudtype, catalogue } = this.state;
     const pushedCatalogue = [];
     for (let i = 0; i < posts.length; i++) {
       let row = posts[i].node.frontmatter;
-      if (category.indexOf(row.category[0]) === -1) {
-        category.push(row.category[0]);
+      if (cloudtype.indexOf(row.cloudtype[0]) === -1) {
+        cloudtype.push(row.cloudtype[0]);
       }
-      if (pushedCatalogue.indexOf(row.category[1]) === -1) {
+      if (pushedCatalogue.indexOf(row.cloudtype[1]) === -1) {
         catalogue.push(posts[i].node);
-        pushedCatalogue.push(row.category[1]);
+        pushedCatalogue.push(row.cloudtype[1]);
       }
     }
     for (let i = 0; i < catalogue.length; i++) {
-      let cat = catalogue[i].frontmatter.category[1];
+      let cat = catalogue[i].frontmatter.cloudtype[1];
       for (let j = 0; j < dashboards.length; j++) {
         let dash = dashboards[j].node;
         if (cat === dash.frontmatter.dashtype) {
@@ -57,7 +57,7 @@ class CatalogueRoll extends React.Component {
       }
     }
     this.setState({
-      category,
+      cloudtype,
       catalogue
     })
   }
@@ -77,21 +77,21 @@ class CatalogueRoll extends React.Component {
       if (value) {
         for (let i = 0; i < posts.length; i++) {
           let search = posts[i].node;
-          let category = search.frontmatter.category[1].toLowerCase();
-          if (category.indexOf(value) !== -1) {
-            if (duplicatecatalogue.indexOf(category) === -1) {
+          let cloudtype = search.frontmatter.cloudtype[1].toLowerCase();
+          if (cloudtype.indexOf(value) !== -1) {
+            if (duplicatecatalogue.indexOf(cloudtype) === -1) {
               queryResult.push(search);
-              duplicatecatalogue.push(category);
+              duplicatecatalogue.push(cloudtype);
             }
           }
         }
       } else {
         for (let j = 0; j < posts.length; j++) {
           let search = posts[j].node;
-          let category = search.frontmatter.category[1].toLowerCase();
-          if (duplicatecatalogue.indexOf(category) === -1) {
+          let cloudtype = search.frontmatter.cloudtype[1].toLowerCase();
+          if (duplicatecatalogue.indexOf(cloudtype) === -1) {
             queryResult.push(search);
-            duplicatecatalogue.push(category);
+            duplicatecatalogue.push(cloudtype);
           }
         }
       }
@@ -108,29 +108,29 @@ class CatalogueRoll extends React.Component {
       for (let i = 0; i < catalogue.length; i++) {
         let row = catalogue[i];
         {
-          (categorytype == row.frontmatter.category[0] || categorytype == 'All') &&
-            retData.push(
-              <div className="is-parent column is-4" key={v4()}>
-                <article className="blog-list-item tile is-child box">
-                  <div className="columns is-multiline">
-                    <div className="is-parent column is-4">
-                      <img src={!!row.frontmatter.image.childImageSharp ? row.frontmatter.image.childImageSharp.fluid.src : row.frontmatter.image} alt={row.frontmatter.title} title={row.frontmatter.title} />
-                    </div>
-                    <div className="is-parent column is-8">
-                      <p className="title is-block"><Link to={`/category/${kebabCase(row.frontmatter.category[1])}/`}>{row.frontmatter.category[1]}</Link></p>
-                      <p className="subtitle is-block">{row.frontmatter.text}</p>
-                      <ul>
-                        <li><a onClick={e => this.onClickAddLibrary(e, row.frontmatter.title, row.id)}>Add Catalog To library</a></li>
-                        {
-                          row.dashboard &&
-                          <li><Link to={`${row.dashboard.fields.slug}`}>Preview Dashboard</Link></li>
-                        }
-                      </ul>
-                    </div>
+          // (categorytype == row.frontmatter.cloudtype[0] || categorytype == 'All') &&
+          retData.push(
+            <div className="is-parent column is-4" key={v4()}>
+              <article className="blog-list-item tile is-child box">
+                <div className="columns is-multiline">
+                  <div className="is-parent column is-4">
+                    <img src={!!row.frontmatter.image.childImageSharp ? row.frontmatter.image.childImageSharp.fluid.src : row.frontmatter.image} alt={row.frontmatter.title} title={row.frontmatter.title} />
                   </div>
-                </article>
-              </div>
-            );
+                  <div className="is-parent column is-8">
+                    <p className="title is-block"><Link to={`/category/${kebabCase(row.frontmatter.cloudtype[1])}/`}>{row.frontmatter.cloudtype[1]}</Link></p>
+                    <p className="subtitle is-block">{row.frontmatter.text}</p>
+                    <ul>
+                      <li><a onClick={e => this.onClickAddLibrary(e, row.frontmatter.title, row.id)}>Add Catalog To library</a></li>
+                      {
+                        row.dashboard &&
+                        <li><Link to={`${row.dashboard.fields.slug}`}>Preview Dashboard</Link></li>
+                      }
+                    </ul>
+                  </div>
+                </div>
+              </article>
+            </div>
+          );
         }
       }
     } else {
@@ -149,9 +149,23 @@ class CatalogueRoll extends React.Component {
     this.addcatalogueRef.current.toggle();
   };
 
+  displayCloudType = () => {
+    const { cloudtype } = this.state;
+    let options = [];
+    if (cloudtype) {
+      for (let i = 0; i < cloudtype.length; i++) {
+        console.log(cloudtype[i]);
+        options.push(
+          <option key={`cloudtype-${i}`}>{cloudtype[i]}</option>
+        )
+      }
+    }
+    return options;
+  }
+
 
   render() {
-    const { category, searchKey } = this.state;
+    const { cloudtype, searchKey } = this.state;
     return (
       <div className="catalogue-roll-container">
         <div className="container">
@@ -169,10 +183,11 @@ class CatalogueRoll extends React.Component {
               <div className="field category-select">
                 <select className="input select" name="catalogType" onChange={this.handlestateChange}>
                   <option>All</option>
-                  {category &&
-                    category.map((value) => (
+                  {this.displayCloudType()}
+                  {/* {cloudtype &&
+                    cloudtype.map((value) => (
                       <option key={v4()}>{value}</option>
-                    ))}
+                    ))} */}
                 </select>
               </div>
               <div className="form-group category-control-group">
@@ -230,7 +245,7 @@ export default () => (
                 title
                 text
                 templateKey
-                category
+                cloudtype
               }
             }
           }

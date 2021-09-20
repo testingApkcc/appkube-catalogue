@@ -21,12 +21,12 @@ const CategoryPage = ({
             className="column is-10 is-offset-1"
             style={{ marginBottom: '6rem' }}
           >
-            <h1 className="title is-size-2 is-bold-light">Category</h1>
+            <h1 className="title is-size-2 is-bold-light">Cloud Type</h1>
             <ul className="taglist">
-              {group.map((category) => (
-                <li key={category.fieldValue}>
-                  <Link to={`/category/${kebabCase(category.fieldValue)}/`}>
-                    {category.fieldValue} ({category.totalCount})
+              {group.map((cloudtype) => (
+                <li key={cloudtype.fieldValue}>
+                  <Link to={`/category/${kebabCase(cloudtype.fieldValue)}/`}>
+                    {cloudtype.fieldValue} ({cloudtype.totalCount})
                   </Link>
                 </li>
               ))}
@@ -48,7 +48,7 @@ export const categoryPageQuery = graphql`
       }
     }
     allMarkdownRemark(limit: 1000) {
-      group(field: frontmatter___category) {
+      group(field: frontmatter___cloudtype) {
         fieldValue
         totalCount
       }
