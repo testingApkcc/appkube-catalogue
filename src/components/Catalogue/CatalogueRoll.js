@@ -154,7 +154,7 @@ class CatalogueRoll extends React.Component {
                       <img src={!!row.frontmatter.image.childImageSharp ? row.frontmatter.image.childImageSharp.fluid.src : row.frontmatter.image} alt={row.frontmatter.title} title={row.frontmatter.title} />
                     </div>
                     <div className="is-parent column is-8">
-                      <p className="title is-block"><Link to={`/category/${kebabCase(row.frontmatter.cloudtype[1])}/`}>{row.frontmatter.cloudtype}</Link></p>
+                      <p className="title is-block"><Link to={`/category/${kebabCase(row.frontmatter.cloudtype)}/`}>{row.frontmatter.cloudtype}</Link></p>
                       <p className="subtitle is-block">{row.frontmatter.text}</p>
                       <ul>
                         <li><a onClick={e => this.onClickAddLibrary(e, row.frontmatter.title, row.id)}>Add Catalog To library</a></li>
@@ -188,8 +188,7 @@ class CatalogueRoll extends React.Component {
 
 
   render() {
-    const { cloudtype, searchKey, hostingnature, servicetype, servicename, nature } = this.state;
-    console.log(servicename)
+    const { cloudtype, searchKey, hostingnature, servicetype, servicename, nature, categorytype, hostingnatureOption, servicetypeOption, servicenameOption, natureOption } = this.state;
     return (
       <div className="catalogue-roll-container">
         <div className="container">
@@ -205,47 +204,47 @@ class CatalogueRoll extends React.Component {
             </div>
             <div className="fliter-right">
               <div className="field category-select">
-                <select className="input select" name="categorytype" onChange={this.handlestateChange}>
-                  <option>All</option>
+                <select className="input select" name="categorytype" value={categorytype} onChange={this.handlestateChange}>
+                  <option value="All">All</option>
                   {cloudtype &&
                     cloudtype.map((value) => (
-                      <option key={v4()}>{value}</option>
+                      <option value={value} key={v4()}>{value}</option>
                     ))}
                 </select>
               </div>
               <div className="field category-select">
-                <select className="input select" name="hostingnatureOption" onChange={this.handlestateChange}>
-                  <option>All</option>
+                <select className="input select" name="hostingnatureOption" value={hostingnatureOption} onChange={this.handlestateChange}>
+                  <option value="All">All</option>
                   {hostingnature &&
                     hostingnature.map((value) => (
-                      <option key={v4()}>{value}</option>
+                      <option value={value} key={v4()}>{value}</option>
                     ))}
                 </select>
               </div>
               <div className="field category-select">
-                <select className="input select" name="servicetypeOption" onChange={this.handlestateChange}>
-                  <option>All</option>
+                <select className="input select" name="servicetypeOption" value={servicetypeOption} onChange={this.handlestateChange}>
+                  <option value="All">All</option>
                   {servicetype &&
                     servicetype.map((value) => (
-                      <option key={v4()}>{value}</option>
+                      <option value={value} key={v4()}>{value}</option>
                     ))}
                 </select>
               </div>
               <div className="field category-select">
-                <select className="input select" name="servicenameOption" onChange={this.handlestateChange}>
-                  <option>All</option>
+                <select className="input select" name="servicenameOption" value={servicenameOption} onChange={this.handlestateChange}>
+                  <option value="All">All</option>
                   {servicename &&
                     servicename.map((value) => (
-                      <option key={v4()}>{value}</option>
+                      <option value={value} key={v4()}>{value}</option>
                     ))}
                 </select>
               </div>
               <div className="field category-select">
-                <select className="input select" name="natureOption" onChange={this.handlestateChange}>
-                  <option>All</option>
+                <select className="input select" name="natureOption" value={natureOption} onChange={this.handlestateChange}>
+                  <option value="All">All</option>
                   {nature &&
                     nature.map((value) => (
-                      <option key={v4()}>{value}</option>
+                      <option value={value} key={v4()}>{value}</option>
                     ))}
                 </select>
               </div>
