@@ -48,31 +48,44 @@ class CatalogueRoll extends React.Component {
     const pushedCatalogue = [];
     for (let i = 0; i < posts.length; i++) {
       let row = posts[i].node.frontmatter;
-      if (cloudtype.indexOf(row.cloudtype[0]) === -1) {
-        cloudtype.push(row.cloudtype[0]);
-      } else if (hostingnature.indexOf(row.hostingnature[0]) === -1) {
-        hostingnature.push(row.hostingnature[0]);
-      } else if (servicetype.indexOf(row.servicetype[0]) === -1) {
-        servicetype.push(row.servicetype[0]);
-      } else if (servicename.indexOf(row.servicename[0]) === -1) {
-        servicename.push(row.servicename[0]);
-      } else if (nature.indexOf(row.nature[0]) === -1) {
-        nature.push(row.nature[0]);
+      if (cloudtype.indexOf(row.cloudtype) === -1) {
+        cloudtype.push(row.cloudtype);
       }
-      if (pushedCatalogue.indexOf(row.cloudtype[1]) === -1 || pushedCatalogue.indexOf(row.hostingnature[1]) === -1 || pushedCatalogue.indexOf(row.servicetype[1]) === -1 || pushedCatalogue.indexOf(row.servicename[1]) === -1 || pushedCatalogue.indexOf(row.nature[1]) === -1) {
+      if (hostingnature.indexOf(row.hostingnature) === -1) {
+        hostingnature.push(row.hostingnature);
+      }
+      if (servicetype.indexOf(row.servicetype) === -1) {
+        servicetype.push(row.servicetype);
+      }
+      if (servicename.indexOf(row.servicename) === -1) {
+        servicename.push(row.servicename);
+      }
+      if (nature.indexOf(row.nature) === -1) {
+        nature.push(row.nature);
+      }
+      if (pushedCatalogue.indexOf(row.cloudtype) === -1) {
         catalogue.push(posts[i].node);
-        pushedCatalogue.push(row.cloudtype[1]);
-        pushedCatalogue.push(row.hostingnature[1]);
-        pushedCatalogue.push(row.servicetype[1]);
-        pushedCatalogue.push(row.servicename[1]);
-        pushedCatalogue.push(row.nature[1]);
+        pushedCatalogue.push(row.cloudtype);
+      } else if (pushedCatalogue.indexOf(row.hostingnature) === -1) {
+        catalogue.push(posts[i].node);
+        pushedCatalogue.push(row.hostingnature);
+      } else if (pushedCatalogue.indexOf(row.servicetype) === -1) {
+        catalogue.push(posts[i].node);
+        pushedCatalogue.push(row.servicetype);
+      } else if (pushedCatalogue.indexOf(row.servicename) === -1) {
+        catalogue.push(posts[i].node);
+        pushedCatalogue.push(row.servicename);
+      } else if (pushedCatalogue.indexOf(row.nature) === -1) {
+        catalogue.push(posts[i].node);
+        pushedCatalogue.push(row.nature);
       }
     }
     for (let i = 0; i < catalogue.length; i++) {
-      let cat = catalogue[i].frontmatter.cloudtype[1];
+      let cat = catalogue[i].frontmatter.cloudtype;
       for (let j = 0; j < dashboards.length; j++) {
         let dash = dashboards[j].node;
-        if (cat === dash.frontmatter.dashtype) {
+        catalogue[i].dashboard = dash;
+        if (cat === dash.frontmatter.dashtype || catalogue[i].frontmatter.hostingnature === dash.frontmatter.dashtype || catalogue[i].frontmatter.servicetype === dash.frontmatter.dashtype || catalogue[i].frontmatter.servicename === dash.frontmatter.dashtype) {
           catalogue[i].dashboard = dash;
         }
       }
@@ -132,7 +145,7 @@ class CatalogueRoll extends React.Component {
       for (let i = 0; i < catalogue.length; i++) {
         let row = catalogue[i];
         {
-          (categorytype == row.frontmatter.cloudtype[0] || categorytype == 'All' || hostingnatureOption == row.frontmatter.hostingnature[0] || hostingnatureOption == 'All' || servicetypeOption == row.frontmatter.servicetype[0] || servicetypeOption == 'All' || servicenameOption == row.frontmatter.servicename[0] || servicenameOption == 'All' || natureOption == row.frontmatter.nature[0] || natureOption == 'All') &&
+          (categorytype == row.frontmatter.cloudtype || categorytype == 'All' && hostingnatureOption == row.frontmatter.hostingnature || hostingnatureOption == 'All' && servicetypeOption == row.frontmatter.servicetype || servicetypeOption == 'All' && servicenameOption == row.frontmatter.servicename || servicenameOption == 'All' && natureOption == row.frontmatter.nature || natureOption == 'All') &&
             retData.push(
               <div className="is-parent column is-4" key={v4()}>
                 <article className="blog-list-item tile is-child box">
@@ -141,7 +154,7 @@ class CatalogueRoll extends React.Component {
                       <img src={!!row.frontmatter.image.childImageSharp ? row.frontmatter.image.childImageSharp.fluid.src : row.frontmatter.image} alt={row.frontmatter.title} title={row.frontmatter.title} />
                     </div>
                     <div className="is-parent column is-8">
-                      <p className="title is-block"><Link to={`/category/${kebabCase(row.frontmatter.cloudtype[1])}/`}>{row.frontmatter.cloudtype[1]}</Link></p>
+                      <p className="title is-block"><Link to={`/category/${kebabCase(row.frontmatter.cloudtype[1])}/`}>{row.frontmatter.cloudtype}</Link></p>
                       <p className="subtitle is-block">{row.frontmatter.text}</p>
                       <ul>
                         <li><a onClick={e => this.onClickAddLibrary(e, row.frontmatter.title, row.id)}>Add Catalog To library</a></li>
