@@ -148,7 +148,7 @@ class CatalogueRoll extends React.Component {
         let isMatched = true;
         if (!categorytype || (categorytype && categorytype === row.frontmatter.cloudtype)) {
           // if (catalogue.indexOf(row.frontmatter.cloudtype) === -1) {
-            isMatched = true;
+          isMatched = true;
         } else {
           isMatched = false;
         }
@@ -240,6 +240,7 @@ class CatalogueRoll extends React.Component {
             <div className="fliter-right">
               <div className="field category-select">
                 <select className="input select" name="categorytype" value={categorytype} onChange={this.handlestateChange}>
+                  <option value="">Select Cloud Type</option>
                   {cloudtype &&
                     cloudtype.map((value) => (
                       <option value={value} key={v4()}>{value}</option>
@@ -248,6 +249,7 @@ class CatalogueRoll extends React.Component {
               </div>
               <div className="field category-select">
                 <select className="input select" name="hostingnatureOption" value={hostingnatureOption} onChange={this.handlestateChange}>
+                  <option value="">Select Hosting Nature</option>
                   {hostingnature &&
                     hostingnature.map((value) => (
                       <option value={value} key={v4()}>{value}</option>
@@ -256,6 +258,7 @@ class CatalogueRoll extends React.Component {
               </div>
               <div className="field category-select">
                 <select className="input select" name="servicetypeOption" value={servicetypeOption} onChange={this.handlestateChange}>
+                  <option value="">Select Service Type</option>
                   {servicetype &&
                     servicetype.map((value) => (
                       <option value={value} key={v4()}>{value}</option>
@@ -264,6 +267,7 @@ class CatalogueRoll extends React.Component {
               </div>
               <div className="field category-select">
                 <select className="input select" name="servicenameOption" value={servicenameOption} onChange={this.handlestateChange}>
+                  <option value="">Select Service Name</option>
                   {servicename &&
                     servicename.map((value) => (
                       <option value={value} key={v4()}>{value}</option>
@@ -272,6 +276,7 @@ class CatalogueRoll extends React.Component {
               </div>
               <div className="field category-select">
                 <select className="input select" name="natureOption" value={natureOption} onChange={this.handlestateChange}>
+                  <option value="">Select Nature</option>
                   {nature &&
                     nature.map((value) => (
                       <option value={value} key={v4()}>{value}</option>
