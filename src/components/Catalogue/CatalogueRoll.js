@@ -114,22 +114,22 @@ class CatalogueRoll extends React.Component {
       if (value) {
         for (let i = 0; i < posts.length; i++) {
           let search = posts[i].node;
-          let cloudtype = search.frontmatter.cloudtype[1].toLowerCase();
-          if (cloudtype.indexOf(value) !== -1) {
-            if (duplicatecatalogue.indexOf(cloudtype) === -1) {
+          let title = search.frontmatter.title.toLowerCase();
+          if (title.indexOf(value) !== -1) {
+            if (duplicatecatalogue.indexOf(title) === -1) {
               queryResult.push(search);
-              duplicatecatalogue.push(cloudtype);
+              duplicatecatalogue.push(title);
             }
           }
         }
       } else {
         for (let j = 0; j < posts.length; j++) {
           let search = posts[j].node;
-          let cloudtype = search.frontmatter.cloudtype[1].toLowerCase();
-          if (duplicatecatalogue.indexOf(cloudtype) === -1) {
-            queryResult.push(search);
-            duplicatecatalogue.push(cloudtype);
-          }
+          let cloudtype = search.frontmatter.title.toLowerCase();
+          // if (duplicatecatalogue.indexOf(cloudtype) === -1) {
+          queryResult.push(search);
+          // duplicatecatalogue.push(cloudtype);
+          // }
         }
       }
       this.setState({
@@ -146,7 +146,8 @@ class CatalogueRoll extends React.Component {
         let row = catalogue[i];
         let isMatched = true;
         if (!categorytype || (categorytype && categorytype === row.frontmatter.cloudtype)) {
-          isMatched = true;
+          // if (catalogue.indexOf(row.frontmatter.cloudtype) === -1) {
+            isMatched = true;
         } else {
           isMatched = false;
         }
@@ -187,7 +188,7 @@ class CatalogueRoll extends React.Component {
                     <img src={!!row.frontmatter.image.childImageSharp ? row.frontmatter.image.childImageSharp.fluid.src : row.frontmatter.image} alt={row.frontmatter.title} title={row.frontmatter.title} />
                   </div>
                   <div className="is-parent column is-8">
-                    <p className="title is-block"><Link to={`/category/${kebabCase(row.frontmatter.cloudtype)}/`}>{row.frontmatter.cloudtype}</Link></p>
+                    <p className="title is-block"><Link to={`/category/${kebabCase(row.frontmatter.cloudtype)}/`}>{row.frontmatter.title}</Link></p>
                     <p className="subtitle is-block">{row.frontmatter.text}</p>
                     <ul>
                       <li><a onClick={e => this.onClickAddLibrary(e, row.frontmatter.title, row.id)}>Add Catalog To library</a></li>
