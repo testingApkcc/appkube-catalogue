@@ -124,7 +124,7 @@ class CategoryRoute extends React.Component {
               </div>
               <div className="column is-10">
                 <div className="dashboard-list">
-                  {this.renderDashboardList(posts)};
+                  {this.renderDashboardList(posts)}
                 </div>
               </div>
             </div>

@@ -55,7 +55,7 @@ class AddCataloguePopup extends React.Component {
         const state = this.state;
         return (
             <Modal isOpen={state.modal} className="" modalClassName="catalog-modal-container add-catalogue-container">
-                <ModalBody style={{ height: 'calc(75vh - 110px)', overflowY: 'auto', overflowX: "hidden" }}>
+                <ModalBody style={{ height: 'calc(70vh - 0px)', overflowY: 'auto', overflowX: "hidden" }}>
                     <div className="catalog-form-group">
                         <div className="form-group">
                             <label htmlFor="appName">Catalog Name:</label>

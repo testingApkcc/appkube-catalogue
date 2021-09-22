@@ -410,7 +410,7 @@ class AddLibraryPopup extends React.Component {
         return (
             <Modal isOpen={state.modal} className="" modalClassName="catalog-modal-container">
                 <ModalHeader toggle={this.closeModel}>{this.state.catalogName}</ModalHeader>
-                <ModalBody style={{ height: 'calc(75vh - 110px)', overflowY: 'auto', overflowX: "hidden" }}>
+                <ModalBody style={{ height: 'calc(60vh - 0px)', overflowY: 'auto', overflowX: "hidden" }}>
                     <div className="catalog-form-group">
                         <div className="form-group">
                             <label htmlFor="appName">App Name:</label>

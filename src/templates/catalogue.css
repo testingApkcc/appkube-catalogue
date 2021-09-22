@@ -1,7 +1,7 @@
 .catalogue-roll-container .common-container {
     padding-top: 15px;
-    padding-left: 45px;
-    padding-right: 45px;
+    padding-left: 0px;
+    padding-right: 0px;
     padding-bottom: 15px;
     border-bottom: 1px solid #f5f6f5;
 }
@@ -28,7 +28,7 @@
 
 .catalogue-roll-container .catalogue-fliter .fliter-left {
     display: flex;
-    width: 45%;
+    width: 15%;
 }
 
 .catalogue-roll-container .catalogue-fliter .fliter-left .create-btn {
@@ -49,14 +49,15 @@
 
 .catalogue-roll-container .catalogue-fliter .fliter-right {
     display: flex;
-    width: 55%;
+    width: 85%;
     justify-content: space-between;
 }
 
 .catalogue-roll-container .catalogue-fliter .fliter-right .category-select {
     display: inline-block;
-    width: 49%;
+    width: 250px;
     margin-bottom: 0;
+    margin-right: 15px;
 }
 
 .catalogue-roll-container .catalogue-fliter .fliter-right .category-select .input.select {
@@ -327,13 +328,12 @@
     max-width: 100%;
 }
 .add-catalogue-container .catalog-form-group .form-group .input.select {
-    width: 250px;
-    max-width: 250px;
+    width: 100%;
+    max-width: 100%;
 }
 .add-catalogue-container .catalog-form-group .form-group .input.textarea {
     height: 100px;
 }
-
 
 
 .left-filter strong {
