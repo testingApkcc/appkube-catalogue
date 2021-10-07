@@ -48,6 +48,7 @@ collections:
       - { label: "Service Name", name: "servicename", widget: "string" }
       - { label: "Nature", name: "nature", widget: "string" }
       - { label: "Data Source", name: "datasource", widget: "string" }
+      - {label: "Dashboard Data", name: "dashboarddatajson", widget: "object", fields: [{label: Data, name: data, widget: text}]}
       - {
           label: Slider,
           name: slider,

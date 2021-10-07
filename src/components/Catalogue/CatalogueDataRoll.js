@@ -1,11 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link, graphql, StaticQuery } from 'gatsby'
-import isSearch from '../../img/search-icon.png'
-import AddLibraryPopup from './AddLibraryPopup';
-import AddCataloguePopup from './AddCataloguePopup';
-import { kebabCase } from 'lodash';
-import { v4 } from 'uuid';
+import { graphql, StaticQuery } from 'gatsby'
 
 class CatalogueDataRoll extends React.Component {
   constructor(props) {

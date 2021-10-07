@@ -6,6 +6,9 @@ import AddLibraryPopup from './AddLibraryPopup';
 import AddCataloguePopup from './AddCataloguePopup';
 import { kebabCase } from 'lodash';
 import { v4 } from 'uuid';
+import './../../css/catalogue.css';
+import './../../css/modal.css';
+import './../../css/slider.css';
 
 class CatalogueRoll extends React.Component {
   addlibraryRef;
