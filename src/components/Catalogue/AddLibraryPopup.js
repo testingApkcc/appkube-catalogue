@@ -375,14 +375,14 @@ class AddLibraryPopup extends React.Component {
     addToLibrary = () => {
         const { catalogId, checkedFolder, appName, dataSource } = this.state;
         if (checkedFolder.length === 0) {
-            console.log("Please select one folder");
+            //console.log("Please select one folder");
             this.setState({
                 message: "Please select at least one folder for library location",
                 isAlertOpen: true,
             });
             return;
         } else if (checkedFolder.length > 1) {
-            console.log("Only one folder can be selected for library location");
+            //console.log("Only one folder can be selected for library location");
             this.setState({
                 message: "Only one folder can be selected for library location",
                 isAlertOpen: true,
@@ -402,7 +402,7 @@ class AddLibraryPopup extends React.Component {
             appName: appName,
             dataSource: dataSource === null ? "AWS" : dataSource
         }
-        console.log("Object being added to library : ", obj);
+        //console.log("Object being added to library : ", obj);
     }
 
     render() {

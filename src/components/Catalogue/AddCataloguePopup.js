@@ -48,7 +48,7 @@ class AddCataloguePopup extends React.Component {
             dataSource: dataSource === null ? "AWS" : dataSource,
             appDescription: appDescription,
         }
-        console.log("Object being added to library : ", obj);
+        //console.log("Object being added to library : ", obj);
     }
 
     render() {

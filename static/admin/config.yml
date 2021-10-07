@@ -41,6 +41,13 @@ collections:
         }
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Category", name: "category", widget: "list" }
+      - { label: "Text", name: "text", widget: "string" }
+      - { label: "Cloud Type", name: "cloudtype", widget: "string" }
+      - { label: "Hosting Nature", name: "hostingnature", widget: "string" }
+      - { label: "Service Type", name: "servicetype", widget: "string" }
+      - { label: "Service Name", name: "servicename", widget: "string" }
+      - { label: "Nature", name: "nature", widget: "string" }
+      - { label: "Data Source", name: "datasource", widget: "string" }
       - {
           label: Slider,
           name: slider,
