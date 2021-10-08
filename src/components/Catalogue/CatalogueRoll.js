@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link, graphql, StaticQuery } from 'gatsby'
+import Layout from '../Layout'
 import isSearch from '../../img/search-icon.png'
 import AddLibraryPopup from './AddLibraryPopup';
 import AddCataloguePopup from './AddCataloguePopup';
@@ -184,26 +185,24 @@ class CatalogueRoll extends React.Component {
         }
         if (isMatched) {
           retData.push(
-            <div className="is-parent column is-4" key={v4()}>
-              <article className="blog-list-item tile is-child box">
-                <div className="columns is-multiline">
-                  <div className="is-parent column is-4">
-                    <img src={!!row.frontmatter.image.childImageSharp ? row.frontmatter.image.childImageSharp.fluid.src : row.frontmatter.image} alt={row.frontmatter.title} title={row.frontmatter.title} />
-                  </div>
-                  <div className="is-parent column is-8">
-                    <p className="title is-block"><Link to={`/category/${kebabCase(row.frontmatter.cloudtype)}/`}>{row.frontmatter.title}</Link></p>
-                    <p className="subtitle is-block">{row.frontmatter.text}</p>
-                    <ul>
-                      <li><a onClick={e => this.onClickAddLibrary(e, row.frontmatter.title, row.id)}>Add Catalog To library</a></li>
-                      {
-                        row.dashboard &&
-                        <li><Link to={`${row.dashboard.fields.slug}`}>Preview Dashboard</Link></li>
-                      }
-                    </ul>
-                  </div>
+            <article className="blog-list-item box" key={v4()}>
+              <div className="columns is-multiline">
+                <div className="is-parent column is-2">
+                  <img src={!!row.frontmatter.image.childImageSharp ? row.frontmatter.image.childImageSharp.fluid.src : row.frontmatter.image} alt={row.frontmatter.title} title={row.frontmatter.title} />
                 </div>
-              </article>
-            </div>
+                <div className="is-parent column is-10">
+                  <p className="title is-block"><Link to={`/category/${kebabCase(row.frontmatter.cloudtype)}/`}>{row.frontmatter.title}</Link></p>
+                  <p className="subtitle is-block">{row.frontmatter.text}</p>
+                  <ul>
+                    <li><a onClick={e => this.onClickAddLibrary(e, row.frontmatter.title, row.id)}>Add Catalog To library</a></li>
+                    {
+                      row.dashboard &&
+                      <li><Link to={`${row.dashboard.fields.slug}`}>Preview Dashboard</Link></li>
+                    }
+                  </ul>
+                </div>
+              </div>
+            </article>
           );
         }
       }
@@ -227,81 +226,97 @@ class CatalogueRoll extends React.Component {
   render() {
     const { cloudtype, searchKey, hostingnature, servicetype, servicename, nature, categorytype, hostingnatureOption, servicetypeOption, servicenameOption, natureOption } = this.state;
     return (
-      <div className="catalogue-roll-container">
-        <div className="container">
-          <div className="common-container">
-            <div className="catalog-app-text">
-              <h3>Catalogue</h3>
-              <p>A catalogue is collection of dashboards</p>
+      <Layout>
+        <div className="catalogue-roll-container">
+          <div className="catalogue-roll-tabs">
+            <div className="container">
+              <ul>
+                <li>Providers</li>
+                <li className="active">Modules</li>
+              </ul>
             </div>
           </div>
-          <div className="common-container catalogue-fliter">
-            <div className="fliter-left">
-              <button onClick={this.onClickAddCatalogue} className="create-btn">Add Catalogue</button>
-            </div>
-            <div className="fliter-right">
-              <div className="field category-select">
-                <select className="input select" name="categorytype" value={categorytype} onChange={this.handlestateChange}>
-                  <option value="">Select Cloud Type</option>
-                  {cloudtype &&
-                    cloudtype.map((value) => (
-                      <option value={value} key={v4()}>{value}</option>
-                    ))}
-                </select>
+          <div className="container">
+            <div className="common-container">
+              <div className="columns is-multiline">
+                <div className="is-parent column is-3">
+                  <div className="catalogue-fliter">
+                    <div className="form-group category-control-group">
+                      <form>
+                        <input type="text" className="input" placeholder="Search" value={searchKey} onChange={this.keyPress} />
+                        <button className="is-search"><img src={isSearch} alt="" /></button>
+                      </form>
+                    </div>
+                    <div className="field category-select">
+                      <select className="input select" name="categorytype" value={categorytype} onChange={this.handlestateChange}>
+                        <option value="">Select Cloud Type</option>
+                        {cloudtype &&
+                          cloudtype.map((value) => (
+                            <option value={value} key={v4()}>{value}</option>
+                          ))}
+                      </select>
+                    </div>
+                    <div className="field category-select">
+                      <select className="input select" name="hostingnatureOption" value={hostingnatureOption} onChange={this.handlestateChange}>
+                        <option value="">Select Hosting Nature</option>
+                        {hostingnature &&
+                          hostingnature.map((value) => (
+                            <option value={value} key={v4()}>{value}</option>
+                          ))}
+                      </select>
+                    </div>
+                    <div className="field category-select">
+                      <select className="input select" name="servicetypeOption" value={servicetypeOption} onChange={this.handlestateChange}>
+                        <option value="">Select Service Type</option>
+                        {servicetype &&
+                          servicetype.map((value) => (
+                            <option value={value} key={v4()}>{value}</option>
+                          ))}
+                      </select>
+                    </div>
+                    <div className="field category-select">
+                      <select className="input select" name="servicenameOption" value={servicenameOption} onChange={this.handlestateChange}>
+                        <option value="">Select Service Name</option>
+                        {servicename &&
+                          servicename.map((value) => (
+                            <option value={value} key={v4()}>{value}</option>
+                          ))}
+                      </select>
+                    </div>
+                    <div className="field category-select">
+                      <select className="input select" name="natureOption" value={natureOption} onChange={this.handlestateChange}>
+                        <option value="">Select Nature</option>
+                        {nature &&
+                          nature.map((value) => (
+                            <option value={value} key={v4()}>{value}</option>
+                          ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div className="is-parent column is-9">
+                  <div className="columns is-multiline">
+                    <div className="is-parent column is-9 pb-0">
+                      <div className="catalog-app-text">
+                        <h3>Catalogue</h3>
+                        <p>A catalogue is collection of dashboards</p>
+                      </div>
+                    </div>
+                    <div className="is-parent column is-3 pb-0">
+                      <button onClick={this.onClickAddCatalogue} className="create-btn">Add Catalogue</button>
+                    </div>
+                  </div>
+                  <div className="catalogue-boxes">
+                    {this.displayCatalogue()}
+                  </div>
+                </div>
               </div>
-              <div className="field category-select">
-                <select className="input select" name="hostingnatureOption" value={hostingnatureOption} onChange={this.handlestateChange}>
-                  <option value="">Select Hosting Nature</option>
-                  {hostingnature &&
-                    hostingnature.map((value) => (
-                      <option value={value} key={v4()}>{value}</option>
-                    ))}
-                </select>
-              </div>
-              <div className="field category-select">
-                <select className="input select" name="servicetypeOption" value={servicetypeOption} onChange={this.handlestateChange}>
-                  <option value="">Select Service Type</option>
-                  {servicetype &&
-                    servicetype.map((value) => (
-                      <option value={value} key={v4()}>{value}</option>
-                    ))}
-                </select>
-              </div>
-              <div className="field category-select">
-                <select className="input select" name="servicenameOption" value={servicenameOption} onChange={this.handlestateChange}>
-                  <option value="">Select Service Name</option>
-                  {servicename &&
-                    servicename.map((value) => (
-                      <option value={value} key={v4()}>{value}</option>
-                    ))}
-                </select>
-              </div>
-              <div className="field category-select">
-                <select className="input select" name="natureOption" value={natureOption} onChange={this.handlestateChange}>
-                  <option value="">Select Nature</option>
-                  {nature &&
-                    nature.map((value) => (
-                      <option value={value} key={v4()}>{value}</option>
-                    ))}
-                </select>
-              </div>
-              <div className="form-group category-control-group">
-                <form>
-                  <input type="text" className="input" placeholder="Search" value={searchKey} onChange={this.keyPress} />
-                  <button className="is-search"><img src={isSearch} alt="" /></button>
-                </form>
-              </div>
-            </div>
-          </div>
-          <div className="common-container catalogue-boxes">
-            <div className="columns is-multiline">
-              {this.displayCatalogue()}
             </div>
           </div>
         </div>
         <AddLibraryPopup ref={this.addlibraryRef} />
         <AddCataloguePopup ref={this.addcatalogueRef} />
-      </div>
+      </Layout>
     )
   }
 }
