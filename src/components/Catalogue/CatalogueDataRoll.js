@@ -6,7 +6,7 @@ class CatalogueDataRoll extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: {}
+      data: []
     }
   }
 
@@ -30,7 +30,7 @@ class CatalogueDataRoll extends React.Component {
     const { data } = this.props
     const { edges: posts } = data.catalogs;
     var query = this.getQueryParams(document.location.search);
-    let dashData = {};
+    let dashData = [];
     for (let i = 0; i < posts.length; i++) {
       let row = posts[i].node.frontmatter;
       let isMatched = true;
@@ -50,7 +50,7 @@ class CatalogueDataRoll extends React.Component {
         isMatched = false;
       }
       if(isMatched){
-        dashData[i] = row.dashboardData.data;
+        dashData.push(JSON.parse(row.dashboardData.data));
       }
     }
     this.setState({
@@ -61,7 +61,7 @@ class CatalogueDataRoll extends React.Component {
   render() {
     const { data } = this.state;
     return (
-      <div className="">
+      <div id="jsondata" className="">
         {JSON.stringify(data)}
       </div>
     )
