@@ -189,10 +189,10 @@ class CatalogueRoll extends React.Component {
             <article className="blog-list-item box" key={v4()}>
               <div className="module-card-content">
                 <div className="columns is-multiline">
-                  <div className="is-parent column is-2">
+                  <div className="is-parent column is-1">
                     <img src={!!row.frontmatter.image.childImageSharp ? row.frontmatter.image.childImageSharp.fluid.src : row.frontmatter.image} alt={row.frontmatter.title} title={row.frontmatter.title} />
                   </div>
-                  <div className="is-parent column is-10">
+                  <div className="is-parent column is-11">
                     <p className="title is-block"><Link to={`/category/${kebabCase(row.frontmatter.cloudtype)}/`}>{row.frontmatter.title}</Link></p>
                     <p className="subtitle is-block">{row.frontmatter.text}</p>
                   </div>
@@ -312,13 +312,11 @@ class CatalogueRoll extends React.Component {
                   <div className="is-parent column is-9">
                     <div className="catalogue-apps-modules">
                       <div className="columns is-multiline">
-                        <div className="is-parent column is-9 pb-0">
+                        <div className="is-parent column is-12 pb-0">
                           <div className="catalog-app-text">
                             <h3>Catalogue</h3>
                             <p>A catalogue is collection of dashboards</p>
                           </div>
-                        </div>
-                        <div className="is-parent column is-3 pb-0">
                           <button onClick={this.onClickAddCatalogue} className="create-btn">Add Catalogue</button>
                         </div>
                       </div>

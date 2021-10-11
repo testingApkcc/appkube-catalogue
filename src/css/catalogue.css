@@ -59,6 +59,7 @@
     padding: 0.75rem;
     padding-top: 30px;
     border-left: 1px #f5f6f5 solid;
+    min-height: 385px;
 }
 
 .catalogue-roll-container .common-container {
@@ -67,6 +68,11 @@
     padding-right: 0px;
     padding-bottom: 0px;
     border-bottom: 1px solid #f5f6f5;
+}
+
+.catalogue-roll-container .catalog-app-text {
+    display: inline-block;
+    width: auto;
 }
 
 .catalogue-roll-container .catalog-app-text h3 {
@@ -136,7 +142,6 @@
     background: #0f5efd;
 }
 
-
 .catalogue-roll-container .catalogue-fliter .category-select {
     display: block;
     width: 100%;
@@ -200,12 +205,12 @@
 }
 
 .catalogue-roll-container .catalogue-boxes .box .module-card-content {
-    padding: 1.25rem;
+    padding: 1.25rem 10px;
 }
 
 .catalogue-roll-container .catalogue-boxes .box .module-card-footer {
     height: 40px;
-    padding: 0 12px 0 16px;
+    padding: 0 10px 0 10px;
     border-top: 1px solid #dce0e6;
     background: #f7f8fa;
     color: #6f7682;
@@ -214,10 +219,6 @@
     line-height: 40px;
     font-size: .8rem;
     font-weight: 500;
-}
-
-.catalogue-roll-container .catalogue-boxes .box .module-card-footer .module-card-footer-details>* {
-    margin-right: 24px;
 }
 
 .catalogue-roll-container .catalogue-boxes .box .module-card-footer .module-card-footer-details>* img {
@@ -257,7 +258,7 @@
 }
 
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 992px) {
     .catalogue-roll-container .catalogue-modules {
         background: none;
     }
@@ -282,6 +283,14 @@
         border-left: none;
     }
 
+    .catalogue-roll-container .catalogue-boxes .box .module-card-footer {
+        font-size: 0.7rem;
+    }
+
+    .catalogue-roll-container .catalogue-boxes .box .module-card-footer .module-card-footer-details {
+        font-size: 0.7rem;
+    }
+
 }
 
 @media screen and (max-width: 580px) {
@@ -292,6 +301,14 @@
 
     .catalogue-roll-container .catalogue-fliter .fliter-right {
         width: 100%;
+    }
+
+    .catalogue-roll-container .catalog-app-text {
+        width: 100%;
+    }
+
+    .catalogue-roll-container .create-btn {
+        float: none;
     }
 }
 
@@ -554,11 +571,5 @@
     .catalogue-roll-container .blog-list-item .column.is-10 {
         flex: none;
         width: 83.33333%;
-    }
-}
-
-@media (max-width: 767px) {
-    .catalogue-roll-container .create-btn {
-        float: none;
     }
 }
