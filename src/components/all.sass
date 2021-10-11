@@ -78,8 +78,30 @@ $black: #2b2523
   width: 1.5rem
   height: 1.5rem
   fill: currentColor
-.navbar-brand .navbar-item.logo
-  padding: 0 1rem
+.navbar .navbar-brand
+  width: 60%
+  justify-content: space-between
+  align-items: center
+  margin-left: 0!important
+.navbar-brand .search-icon
+  display: none
+.navbar-brand .header-search
+  justify-content: flex-end
+  width: 60%
+  position: relative
+.navbar-brand .header-search .input
+  padding-left: 40px
+.navbar-brand .header-search .is-search
+  position: absolute
+  left: 0
+  top: 0
+  border: none
+  background: none
+  line-height: 42px
+  height: 40px
+  width: 40px
+.navbar .navbar-menu
+  margin-right: 0!important
 footer.footer
   padding: 3rem 0rem 0rem
   background-color: transparent
@@ -129,7 +151,44 @@ $menu-label-color: $white-ter
 // responsiveness
 +tablet-only
   .blog-list-item .featured-thumbnail
-    flex-basis: 50%;
+    flex-basis: 50%
+  .navbar .navbar-brand
+    width: 100%
+    padding-left: 15px
+    padding-right: 15px
+    display: block
+  .navbar .logo
+    float: left
+    display: flex
+    height: 3.25rem
+    position: relative
+    width: 5.6rem
+    align-items: center
+    justify-content: center
+  .navbar-brand .search-icon
+    float: right
+    cursor: pointer
+    display: flex
+    height: 3.25rem
+    position: relative
+    width: 3.25rem
+    align-items: center
+    justify-content: center
+  .navbar-brand .navbar-burger
+    float: right
+    margin-left: inherit
+  .navbar-brand .header-search
+    display: none
+    position: absolute
+    width: 100%
+    left: 0
+    top: 52px
+    padding-left: 15px
+    padding-right: 15px
+  .navbar-brand .header-search.is-active
+    display: block
+  .navbar-brand .header-search .is-search
+    left: 15px
 
 +mobile
   .blog-list-item header
@@ -138,3 +197,41 @@ $menu-label-color: $white-ter
     text-align: center;
     max-width: 70%;
     margin: 0 0 1em;
+  .navbar .navbar-brand
+    width: 100%
+    padding-left: 15px
+    padding-right: 15px
+    display: block
+  .navbar .logo
+    float: left
+    display: flex
+    height: 3.25rem
+    position: relative
+    width: 5.6rem
+    align-items: center
+    justify-content: center
+  .navbar-brand .header-search
+    display: none
+    position: absolute
+    width: 100%
+    left: 0
+    top: 52px
+    padding-left: 15px
+    padding-right: 15px
+  .navbar-brand .header-search.is-active
+    display: block
+  .navbar-brand .header-search .is-search
+    left: 15px
+  .navbar-brand .search-icon
+    float: right
+    cursor: pointer
+    display: flex
+    height: 3.25rem
+    position: relative
+    width: 3.25rem
+    align-items: center
+    justify-content: center
+  .navbar-brand .navbar-burger
+    float: right
+    margin-left: inherit
+

@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link, graphql, StaticQuery } from 'gatsby'
 import Layout from '../Layout'
-import isSearch from '../../img/search-icon.png'
+import libraryIcon from '../../img/library-icon.png'
+import dashboardIcon from '../../img/dashboard-icon.png'
 import AddLibraryPopup from './AddLibraryPopup';
 import AddCataloguePopup from './AddCataloguePopup';
 import { kebabCase } from 'lodash';
@@ -186,21 +187,28 @@ class CatalogueRoll extends React.Component {
         if (isMatched) {
           retData.push(
             <article className="blog-list-item box" key={v4()}>
-              <div className="columns is-multiline">
-                <div className="is-parent column is-2">
-                  <img src={!!row.frontmatter.image.childImageSharp ? row.frontmatter.image.childImageSharp.fluid.src : row.frontmatter.image} alt={row.frontmatter.title} title={row.frontmatter.title} />
+              <div className="module-card-content">
+                <div className="columns is-multiline">
+                  <div className="is-parent column is-2">
+                    <img src={!!row.frontmatter.image.childImageSharp ? row.frontmatter.image.childImageSharp.fluid.src : row.frontmatter.image} alt={row.frontmatter.title} title={row.frontmatter.title} />
+                  </div>
+                  <div className="is-parent column is-10">
+                    <p className="title is-block"><Link to={`/category/${kebabCase(row.frontmatter.cloudtype)}/`}>{row.frontmatter.title}</Link></p>
+                    <p className="subtitle is-block">{row.frontmatter.text}</p>
+                  </div>
                 </div>
-                <div className="is-parent column is-10">
-                  <p className="title is-block"><Link to={`/category/${kebabCase(row.frontmatter.cloudtype)}/`}>{row.frontmatter.title}</Link></p>
-                  <p className="subtitle is-block">{row.frontmatter.text}</p>
-                  <ul>
-                    <li><a onClick={e => this.onClickAddLibrary(e, row.frontmatter.title, row.id)}>Add Catalog To library</a></li>
-                    {
-                      row.dashboard &&
-                      <li><Link to={`${row.dashboard.fields.slug}`}>Preview Dashboard</Link></li>
-                    }
-                  </ul>
+              </div>
+              <div className="module-card-footer">
+                <div className="module-card-footer-details">
+                  <a onClick={e => this.onClickAddLibrary(e, row.frontmatter.title, row.id)}><img src={libraryIcon} alt /> Add Catalog To library</a>
                 </div>
+                <div className="module-card-footer-provider">
+                  {
+                    row.dashboard &&
+                    <Link to={`${row.dashboard.fields.slug}`}><img src={dashboardIcon} alt /> Preview Dashboard</Link>
+                  }
+                </div>
+
               </div>
             </article>
           );
@@ -236,78 +244,88 @@ class CatalogueRoll extends React.Component {
               </ul>
             </div>
           </div>
-          <div className="container">
-            <div className="common-container">
-              <div className="columns is-multiline">
-                <div className="is-parent column is-3">
-                  <div className="catalogue-fliter">
-                    <div className="form-group category-control-group">
-                      <form>
-                        <input type="text" className="input" placeholder="Search" value={searchKey} onChange={this.keyPress} />
-                        <button className="is-search"><img src={isSearch} alt="" /></button>
-                      </form>
-                    </div>
-                    <div className="field category-select">
-                      <select className="input select" name="categorytype" value={categorytype} onChange={this.handlestateChange}>
-                        <option value="">Select Cloud Type</option>
-                        {cloudtype &&
-                          cloudtype.map((value) => (
-                            <option value={value} key={v4()}>{value}</option>
-                          ))}
-                      </select>
-                    </div>
-                    <div className="field category-select">
-                      <select className="input select" name="hostingnatureOption" value={hostingnatureOption} onChange={this.handlestateChange}>
-                        <option value="">Select Hosting Nature</option>
-                        {hostingnature &&
-                          hostingnature.map((value) => (
-                            <option value={value} key={v4()}>{value}</option>
-                          ))}
-                      </select>
-                    </div>
-                    <div className="field category-select">
-                      <select className="input select" name="servicetypeOption" value={servicetypeOption} onChange={this.handlestateChange}>
-                        <option value="">Select Service Type</option>
-                        {servicetype &&
-                          servicetype.map((value) => (
-                            <option value={value} key={v4()}>{value}</option>
-                          ))}
-                      </select>
-                    </div>
-                    <div className="field category-select">
-                      <select className="input select" name="servicenameOption" value={servicenameOption} onChange={this.handlestateChange}>
-                        <option value="">Select Service Name</option>
-                        {servicename &&
-                          servicename.map((value) => (
-                            <option value={value} key={v4()}>{value}</option>
-                          ))}
-                      </select>
-                    </div>
-                    <div className="field category-select">
-                      <select className="input select" name="natureOption" value={natureOption} onChange={this.handlestateChange}>
-                        <option value="">Select Nature</option>
-                        {nature &&
-                          nature.map((value) => (
-                            <option value={value} key={v4()}>{value}</option>
-                          ))}
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div className="is-parent column is-9">
-                  <div className="columns is-multiline">
-                    <div className="is-parent column is-9 pb-0">
-                      <div className="catalog-app-text">
-                        <h3>Catalogue</h3>
-                        <p>A catalogue is collection of dashboards</p>
+          <div className="catalogue-modules">
+            <div className="container">
+              <div className="common-container">
+                <div className="columns is-multiline">
+                  <div className="is-parent column is-3">
+                    <div className="catalogue-fliter">
+                      {/* <div className="form-group category-control-group">
+                        <form>
+                          <input type="text" className="input" placeholder="Search" value={searchKey} onChange={this.keyPress} />
+                          <button className="is-search"><img src={isSearch} alt="" /></button>
+                        </form>
+                      </div> */}
+                      <div className="sidebar-filter-title">
+                        <h3>FILTERS</h3>
+                        <a href="#" class="sidebar-reset-filters">
+                          Clear Filters
+                        </a>
+                      </div>
+                      <div className="field category-select">
+                        <select className="input select" name="categorytype" value={categorytype} onChange={this.handlestateChange}>
+                          <option value="">Select Cloud Type</option>
+                          {cloudtype &&
+                            cloudtype.map((value) => (
+                              <option value={value} key={v4()}>{value}</option>
+                            ))}
+                        </select>
+                      </div>
+                      <div className="field category-select">
+                        <select className="input select" name="hostingnatureOption" value={hostingnatureOption} onChange={this.handlestateChange}>
+                          <option value="">Select Hosting Nature</option>
+                          {hostingnature &&
+                            hostingnature.map((value) => (
+                              <option value={value} key={v4()}>{value}</option>
+                            ))}
+                        </select>
+                      </div>
+                      <div className="field category-select">
+                        <select className="input select" name="servicetypeOption" value={servicetypeOption} onChange={this.handlestateChange}>
+                          <option value="">Select Service Type</option>
+                          {servicetype &&
+                            servicetype.map((value) => (
+                              <option value={value} key={v4()}>{value}</option>
+                            ))}
+                        </select>
+                      </div>
+                      <div className="field category-select">
+                        <select className="input select" name="servicenameOption" value={servicenameOption} onChange={this.handlestateChange}>
+                          <option value="">Select Service Name</option>
+                          {servicename &&
+                            servicename.map((value) => (
+                              <option value={value} key={v4()}>{value}</option>
+                            ))}
+                        </select>
+                      </div>
+                      <div className="field category-select">
+                        <select className="input select" name="natureOption" value={natureOption} onChange={this.handlestateChange}>
+                          <option value="">Select Nature</option>
+                          {nature &&
+                            nature.map((value) => (
+                              <option value={value} key={v4()}>{value}</option>
+                            ))}
+                        </select>
                       </div>
                     </div>
-                    <div className="is-parent column is-3 pb-0">
-                      <button onClick={this.onClickAddCatalogue} className="create-btn">Add Catalogue</button>
-                    </div>
                   </div>
-                  <div className="catalogue-boxes">
-                    {this.displayCatalogue()}
+                  <div className="is-parent column is-9">
+                    <div className="catalogue-apps-modules">
+                      <div className="columns is-multiline">
+                        <div className="is-parent column is-9 pb-0">
+                          <div className="catalog-app-text">
+                            <h3>Catalogue</h3>
+                            <p>A catalogue is collection of dashboards</p>
+                          </div>
+                        </div>
+                        <div className="is-parent column is-3 pb-0">
+                          <button onClick={this.onClickAddCatalogue} className="create-btn">Add Catalogue</button>
+                        </div>
+                      </div>
+                      <div className="catalogue-boxes">
+                        {this.displayCatalogue()}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
